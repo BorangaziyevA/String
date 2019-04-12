@@ -8,6 +8,8 @@ String_::String_()
 	length = 0;
 }
 
+
+
 String_::String_(const char * s)
 {
 	length = strlen(s);
@@ -15,17 +17,22 @@ String_::String_(const char * s)
 	strcpy_s(str,length + 1, s);
 }
 
-String_::String_(const String_ & s)
+String_::String_(const String_ & obj)
 {
-	length = s.length;
-	if (length == 0)
+
+
+	this->length = obj.length;
+	if (this->length == 0)
 	{
-		str = nullptr;
+		this->str = nullptr;
 		return;
 	}
-	str = new char[length + 1];
-	strcpy_s(str, length + 1, s.str);
+	this->str = new char[this->length + 1];
+	strcpy_s(this->str, this->length + 1, obj.str);
+
 }
+
+
 
 String_::~String_()
 {
@@ -81,6 +88,7 @@ void String_::append(const char * s)
 
 void String_::print()
 {
+	if (str != nullptr);
 	cout << str << endl;
 }
 
@@ -92,6 +100,36 @@ void String_::clear()
 	}
 	str = nullptr;
 	length = 0;
+}
+
+String_ String_::operator+=(const char * s)
+{
+	this->append(s);
+	return *this;
+}
+String_ String_::operator+=(String_ s)
+{
+	this->append(s.str);
+	return *this;
+}
+
+String_& String_::operator=(const String_ & obj)
+{
+	//Защита от самоприсваивания
+	if (this == &obj)
+	{
+		return *this;
+	}
+	//Очищение
+	this->clear();
+
+	//Копирование и проверка на пустой объект
+	if (obj.str != nullptr)
+	{
+		this->setString(obj.str);
+	}
+	return *this;
+
 }
 
 
