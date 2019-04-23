@@ -8,8 +8,6 @@ String_::String_()
 	length = 0;
 }
 
-
-
 String_::String_(const char * s)
 {
 	length = strlen(s);
@@ -19,7 +17,7 @@ String_::String_(const char * s)
 
 String_::String_(const String_ & obj)
 {
-
+	cout << "copy" << endl;
 
 	this->length = obj.length;
 	if (this->length == 0)
@@ -32,11 +30,28 @@ String_::String_(const String_ & obj)
 
 }
 
+String_::String_(String_ && right)
+{
+	cout << "move" << endl;
+
+	this->length = right.length;
+	this->str = right.str;
+	right.str = nullptr;
+	right.length = 0;
+}
+
 
 
 String_::~String_()
 {
 	clear();
+}
+
+String_ & String_::operator=(String_ && right)
+{
+	swap(this->str, right.str);
+	swap(this->length, right.length);
+	return *this;
 }
 
 void String_::setString(const char * s)
@@ -132,4 +147,22 @@ String_& String_::operator=(const String_ & obj)
 
 }
 
+ostream & operator<<(ostream & os, const String_ & obj)
+{
+	// TODO: вставьте здесь оператор return
+}
 
+istream & operator>>(istream & is, String_ & obj)
+{
+	// TODO: вставьте здесь оператор return
+}
+
+bool operator==(const string & a, const string & b)
+{
+	return false;
+}
+
+bool operator!=(const string & a, const string & b)
+{
+	return false;
+}
